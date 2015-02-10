@@ -50,7 +50,7 @@ class HomePageTest(TestCase):
         home_page(request)
         self.assertEqual(Item.objects.count(), 0)
 
-    def test_home_page_displats_all_list_items(self):
+    def test_home_page_displays_all_list_items(self):
 
         Item.objects.create(text='itemey 1')
         Item.objects.create(text='itemey 2')
@@ -83,4 +83,16 @@ class ItemModelTest(TestCase):
         self.assertEqual(second_saved_item.text, 'Item the second')
 
 
+class ListViewTesy(TestCase):
 
+    def test_displays_all_items(self):
+
+
+        Item.objects.create(text='itemey 1')
+        Item.objects.create(text='itemey 2')
+        
+        
+        response = self.client.get('/lists/the-only-list-in-the-world/')
+        
+        self.assertContains(response, 'itemey 1')
+        self.assertContains(response, 'itemey 2')
